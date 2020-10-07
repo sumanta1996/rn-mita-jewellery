@@ -1,21 +1,56 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState } from 'react';
+import * as Font from 'expo-font';
+import { AppLoading } from 'expo';
+import AppNavigator from './navigation/AppNavigator';
+import { applyMiddleware, combineReducers, createStore } from 'redux';
+import ReduxThunk from 'redux-thunk';
+import { Provider } from 'react-redux';
+import AdminReducer from './store/reducer/admin';
+import OrderReducer from './store/reducer/order';
+import firebase from 'firebase';
+import * as Notifications from 'expo-notifications';
+
+Notifications.setNotificationHandler({
+  handleNotification: async () => {
+    return {
+      shouldShowAlert: true,
+      shouldPlaySound: true,
+    }
+  }
+})
+
+
+const fetchFonts = async () => {
+  return Font.loadAsync({
+    'open-sans': require('./assets/fonts/OpenSans-Regular.ttf'),
+    'open-sans-bold': require('./assets/fonts/OpenSans-Bold.ttf'),
+  })
+};
+
+const config = {
+  apiKey: "AIzaSyBzpmGpErQqjFeR04n5hFnTT0f8qa-WSW0",
+  authDomain: "mita-jewellery.firebaseapp.com",
+  databaseURL: "https://mita-jewellery.firebaseio.com",
+  storageBucket: "mita-jewellery.appspot.com"
+};
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
+  const [fontLoaded, setFontLoaded] = useState(false);
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+  if (!firebase.apps.length) {
+    firebase.initializeApp(config);
+  }
+
+  const rootReducer = combineReducers({
+    admin: AdminReducer,
+    orders: OrderReducer
+  });
+
+  const store = createStore(rootReducer, applyMiddleware(ReduxThunk));
+
+  if (!fontLoaded) {
+    return <AppLoading startAsync={fetchFonts} onFinish={() => setFontLoaded(true)} onError={err => console.log(err)} />
+  }
+
+  return <Provider store={store}><AppNavigator /></Provider>
+}
