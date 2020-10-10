@@ -28,8 +28,6 @@ const ImageSelector = props => {
             quality: 0.5
         });
 
-        console.log(image.uri);
-        //console.log(newPath);
         setImage(image.uri);
         props.onImageTaken(image.uri);
     }

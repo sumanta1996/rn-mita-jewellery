@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "324876129820",
+    "firebase_url": "https://mita-jewellery.firebaseio.com",
+    "project_id": "mita-jewellery",
+    "storage_bucket": "mita-jewellery.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:324876129820:android:40cc2c039be6dc0e48b1d9",
+        "android_client_info": {
+          "package_name": "com.mita.mitajewellery"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "324876129820-7tqh95lo3npk2v1cqr2kr41b0cfv2bie.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCgLGYuqxh8vXLjf88yNlrDE8-yNixrxAY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "324876129820-7tqh95lo3npk2v1cqr2kr41b0cfv2bie.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

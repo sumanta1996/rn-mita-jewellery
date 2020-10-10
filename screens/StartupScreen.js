@@ -31,9 +31,8 @@ const StartupScreen = props => {
                     }
                 } else {
                     //Biometric is not configured thus provide a message
-                    props.navigation.navigate('Auth', {
-                        error: 'Please configure biometric to use it.'
-                    });
+                    console.log('Biometric not configured');
+                    props.navigation.navigate('Admin');
                 }
             }
         } else {

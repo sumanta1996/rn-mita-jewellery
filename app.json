@@ -1,13 +1,17 @@
 {
   "expo": {
-    "name": "rn-mita-jewellery",
+    "name": "Mita Jewellery",
     "slug": "rn-mita-jewellery",
+    "platforms": [
+      "ios",
+      "android"
+    ],
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/logo1.png",
     "splash": {
       "image": "./assets/splash.png",
-      "resizeMode": "contain",
+      "resizeMode": "cover",
       "backgroundColor": "#ffffff"
     },
     "updates": {
@@ -16,6 +20,10 @@
     "assetBundlePatterns": [
       "**/*"
     ],
+    "notification": {
+      "icon": "./assets/notification.png",
+      "color": "#000000"
+    },
     "ios": {
       "supportsTablet": true
     },
@@ -23,7 +31,10 @@
       "favicon": "./assets/favicon.png"
     },
     "android": {
-      "useNextNotificationsApi": true
+      "useNextNotificationsApi": true,
+      "package": "com.mita.mitajewellery",
+      "versionCode": 2,
+      "googleServicesFile": "./google-services.json"
     }
   }
 }

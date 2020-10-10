@@ -17,17 +17,24 @@ const Order = props => {
     })
 
     const orderDeliveredHandler = () => {
-        console.log(props.id);
         dispatch(setOrderDelivered(props.id));
         setDelivered(true);
     }
 
     return (
         <View style={styles.order}>
-                {delivered && <Image source={require('../assets/sold.png')} style={styles.soldImage} />}
+            {delivered && <Image source={require('../assets/sold.png')} style={styles.soldImage} />}
             <View style={styles.imageContainer}>
                 <FlatList horizontal data={imageUrls} keyExtractor={(item, index) => item.url}
-                    renderItem={(itemData) => <Image style={styles.image} source={{ uri: itemData.item.url }} />} />
+                    renderItem={(itemData) => {
+                        return (
+                            <View>
+                                <Image style={styles.image} source={{ uri: itemData.item.url }} />
+                                <View style={styles.textContainer}>
+                                    <Text style={{ fontFamily: 'open-sans-bold' }}>&#x20B9; {itemData.item.price}</Text>
+                                </View>
+                            </View>)
+                    }} />
             </View>
             <View style={styles.userDetails}>
                 <Text style={styles.header}>USER DETAILS</Text>
@@ -35,11 +42,11 @@ const Order = props => {
                 <Text>Email ID: {props.email}</Text>
                 <Text>Mobile Number: {props.mobileNumber}</Text>
                 <Text>Address to be delivered: {props.address}</Text>
-                <Text>Total Price: {props.totalPrice}</Text>
+                <Text>Total Price: <Text style={{ fontFamily: 'open-sans-bold' }}>&#x20B9; {props.totalPrice}</Text></Text>
                 <Text>ORDER PLACED ON: {props.date}</Text>
                 <View style={styles.buttonContainer}>
-                    <Button title="Order Delivered?" disabled={delivered} 
-                    onPress={orderDeliveredHandler} color={props.delivered ? '#ccc' : Colors.primary} />
+                    <Button title="Order Delivered?" disabled={delivered}
+                        onPress={orderDeliveredHandler} color={props.delivered ? '#ccc' : Colors.primary} />
                 </View>
             </View>
         </View>
@@ -92,6 +99,10 @@ const styles = StyleSheet.create({
         zIndex: 50,
         top: 150,
         left: 5
+    },
+    textContainer: {
+        justifyContent: 'center',
+        alignItems: 'center'
     }
 });
 

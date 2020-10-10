@@ -31,7 +31,6 @@ export const login = (email, password) => {
         const resData = await response.json();
         //Change it now it's in seconds
         const tokenExpiry = new Date(new Date().getTime() + (+resData.expiresIn) * 1000);
-        console.log('Login', resData);
         saveToStorage(resData.idToken, resData.localId, resData.refreshToken, tokenExpiry);
 
         dispatch({
@@ -44,7 +43,6 @@ export const login = (email, password) => {
 
 export const refreshAuthentication = refreshToken => {
     return async dispatch => {
-        console.log('Refresh Token: ', refreshToken);
         let response = await fetch('https://securetoken.googleapis.com/v1/token?key=AIzaSyBzpmGpErQqjFeR04n5hFnTT0f8qa-WSW0', {
             method: 'POST',
             headers: {
@@ -68,7 +66,6 @@ export const refreshAuthentication = refreshToken => {
         const resData = await response.json();
         //Change it now it's in seconds
         const tokenExpiry = new Date(new Date().getTime() + (+resData.expires_in) * 1000);
-        console.log(resData);
         AsyncStorage.removeItem('userData');
         saveToStorage(resData.id_token, resData.user_id, resData.refresh_token, tokenExpiry);
 

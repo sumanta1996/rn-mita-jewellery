@@ -7,6 +7,7 @@ import ReduxThunk from 'redux-thunk';
 import { Provider } from 'react-redux';
 import AdminReducer from './store/reducer/admin';
 import OrderReducer from './store/reducer/order';
+import NotificationReducer from './store/reducer/notifications';
 import firebase from 'firebase';
 import * as Notifications from 'expo-notifications';
 
@@ -43,7 +44,8 @@ export default function App() {
 
   const rootReducer = combineReducers({
     admin: AdminReducer,
-    orders: OrderReducer
+    orders: OrderReducer,
+    notification: NotificationReducer
   });
 
   const store = createStore(rootReducer, applyMiddleware(ReduxThunk));

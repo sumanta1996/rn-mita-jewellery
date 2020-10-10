@@ -22,7 +22,7 @@ export const fetchOrders = () => {
                 response[key].email, response[key].mobilNum, response[key].totalPrice, response[key].images);
             orders.push(order);
         }
-        if(orders.length !== 0 ) {
+        if (orders.length !== 0) {
             orders = orders.reverse();
         }
         dispatch({
@@ -32,9 +32,31 @@ export const fetchOrders = () => {
     }
 }
 
+export const fetchSingleOrder = orderId => {
+    return async dispatch => {
+        let response;
+        //console.log(orderId);
+        response = await fetch(`https://mita-jewellery.firebaseio.com/orders/${orderId}.json`, {
+            method: 'GET'
+        });
+
+        if (!response.ok) {
+            throw new Error('Error in fetching orders. Please check your internet connectivity!');
+        }
+
+        response = await response.json();
+        let orders = [];
+        orders.push(new Order(orderId, response.address, response.customerName, response.date, response.delivered,
+            response.email, response.mobilNum, response.totalPrice, response.images));
+        dispatch({
+            type: SET_ORDERS,
+            orders: orders
+        })
+    }
+}
+
 export const setOrderDelivered = orderId => {
     return async dispatch => {
-        console.log(orderId, ' Here');
         await fetch(`https://mita-jewellery.firebaseio.com/orders/${orderId}.json`, {
             method: 'PATCH',
             headers: {
@@ -67,7 +89,7 @@ export const setPushToken = () => {
             response = await response.json();
             if (response) {
                 //Push token is already created
-                for (let key in response) { 
+                for (let key in response) {
                     if (response[key].pushToken !== pushToken) {
                         //Push token is created but device got changed so deleting and creating again
                         await fetch(url, {

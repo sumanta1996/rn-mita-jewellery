@@ -3,13 +3,15 @@ import { View, FlatList, StyleSheet, ActivityIndicator } from 'react-native';
 import Colors from '../constants/Colors';
 import { useDispatch, useSelector } from 'react-redux';
 import Order from '../components/Order';
-import { fetchOrders } from '../store/actions/order';
+import { fetchOrders, fetchSingleOrder } from '../store/actions/order';
 
 const OrdersScreen = props => {
     const [isLoading, setIsLoading] = useState(false);
     const [isRefreshing, setIsRefreshing] = useState(false);
     const dispatch = useDispatch();
-    const orders = useSelector(state => state.orders.orders)
+    const orders = useSelector(state => state.orders.orders);
+    //This parameter is used for understanding whether fetch single order or all orders. doFetch: true then fetch order with orderId
+
 
     const fetchOrderCommon = useCallback(async () => {
         setIsRefreshing(true);
@@ -19,14 +21,33 @@ const OrdersScreen = props => {
             console.log(err);
         }
         setIsRefreshing(false);
-    }, [setIsRefreshing, dispatch])
+    }, [setIsRefreshing, dispatch]);
+
+    const fetchSingleOrderData = useCallback(async orderId => {
+        setIsRefreshing(true);
+        try{
+            await dispatch(fetchSingleOrder(orderId));
+        }catch(err) {
+
+        }
+        setIsRefreshing(false);
+    }, [setIsRefreshing, dispatch]);
 
     useEffect(() => {
         setIsLoading(true);
-        fetchOrderCommon().then(() => setIsLoading(false)).catch(err => {
-            console.log(err);
-            setIsLoading(false);
-        })
+        //console.log(props.navigation.getParam('doFetch'));
+        if(props.navigation.getParam('doFetch')) {
+            const orderId = props.navigation.getParam('orderId');
+            //console.log(props.navigation.getParam('orderId'))
+            fetchSingleOrderData(orderId).then(() => setIsLoading(false)).catch(err => {
+                setIsLoading(false);
+            })
+        }else {
+            fetchOrderCommon().then(() => setIsLoading(false)).catch(err => {
+                console.log(err);
+                setIsLoading(false);
+            })
+        }
     }, []);
 
     const renderOrders = order => {
