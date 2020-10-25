@@ -17,7 +17,7 @@ const ManageProductsScreen = props => {
 
     const renderProductHandler = itemData => {
         return <LaunchCard deleteFeature productId={itemData.item.key} label={itemData.item.title} uri={itemData.item.url.url1} onPress={() => {
-            props.navigation.navigate('Admin', {
+            props.navigation.navigate('AdminConsole', {
                 productId: itemData.item.key
             });
         }} />

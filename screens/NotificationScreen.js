@@ -37,7 +37,7 @@ const NotificationScreen = props => {
 
     return (
         <View style={{margin: 5}}>
-            <FlatList refreshing={isRefreshing} onRefresh={refreshHandler} data={useSelector(state => state.notification.notifications)} renderItem={notificationHandler} keyExtractor={item => item.id} />
+            <FlatList refreshing={isRefreshing} onRefresh={refreshHandler} data={notifications} renderItem={notificationHandler} keyExtractor={item => item.id} />
         </View>)
 }
 

@@ -2,6 +2,7 @@ import { AsyncStorage } from "react-native";
 
 export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';
+export const SHOULD_UPDATE = 'SHOULD_UPDATE';
 
 export const login = (email, password) => {
     return async dispatch => {
@@ -85,6 +86,13 @@ export const logout = () => {
         });
     }
 }
+
+export const shouldUpdateHandler = shouldUpdate => {
+    return {
+        type: SHOULD_UPDATE,
+        shouldUpdate: shouldUpdate
+    }
+} 
 
 const saveToStorage = (token, userId, refreshToken, expiresIn) => {
     AsyncStorage.setItem('userData', JSON.stringify({

@@ -6,6 +6,7 @@ import firebase from "firebase";
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchCategories, fetchLatestId, uploadContent, editContent } from '../store/actions/admin';
 import Colors from '../constants/Colors';
+import { shouldUpdateHandler } from '../store/actions/auth';
 
 const REDUCER_INPUT_UPDATE = 'REDUCER_INPUT_UPDATE';
 const REDUCER_IMAGE_UPDATE = 'REDUCER_IMAGE_UPDATE';
@@ -92,6 +93,7 @@ const AdminConsoleScreen = props => {
 
     useEffect(() => {
         dispatch(fetchCategories());
+        dispatch(shouldUpdateHandler(false));
     }, []);
 
     useEffect(() => {

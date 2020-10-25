@@ -6,7 +6,7 @@
       "ios",
       "android"
     ],
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/logo1.png",
     "splash": {
@@ -33,7 +33,7 @@
     "android": {
       "useNextNotificationsApi": true,
       "package": "com.mita.mitajewellery",
-      "versionCode": 2,
+      "versionCode": 3,
       "googleServicesFile": "./google-services.json"
     }
   }

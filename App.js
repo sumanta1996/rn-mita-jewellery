@@ -2,14 +2,16 @@ import React, { useState } from 'react';
 import * as Font from 'expo-font';
 import { AppLoading } from 'expo';
 import AppNavigator from './navigation/AppNavigator';
-import { applyMiddleware, combineReducers, createStore } from 'redux';
+import { applyMiddleware, combineReducers, createStore, compose } from 'redux';
 import ReduxThunk from 'redux-thunk';
 import { Provider } from 'react-redux';
 import AdminReducer from './store/reducer/admin';
 import OrderReducer from './store/reducer/order';
 import NotificationReducer from './store/reducer/notifications';
+import AuthReducer from './store/reducer/auth';
 import firebase from 'firebase';
 import * as Notifications from 'expo-notifications';
+import { composeWithDevTools } from 'redux-devtools-extension';
 
 Notifications.setNotificationHandler({
   handleNotification: async () => {
@@ -45,10 +47,11 @@ export default function App() {
   const rootReducer = combineReducers({
     admin: AdminReducer,
     orders: OrderReducer,
-    notification: NotificationReducer
+    notification: NotificationReducer,
+    auth: AuthReducer
   });
 
-  const store = createStore(rootReducer, applyMiddleware(ReduxThunk));
+  const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(ReduxThunk)));
 
   if (!fontLoaded) {
     return <AppLoading startAsync={fetchFonts} onFinish={() => setFontLoaded(true)} onError={err => console.log(err)} />

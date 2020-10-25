@@ -1,4 +1,4 @@
-import { FETCH_NOTIFICATIONS, SET_NONEW_NOTIFICATION, SET_READ } from "../actions/notifications"
+import { FETCH_NOTIFICATIONS, SET_NEW_NOTIFICATION, SET_NONEW_NOTIFICATION, SET_READ } from "../actions/notifications"
 
 const initialState = {
     notifications: [],
@@ -9,7 +9,12 @@ export default (state = initialState, action) => {
     switch(action.type) {
         case FETCH_NOTIFICATIONS: 
             return {
-                notifications: action.notifications,
+                ...state,
+                notifications: action.notifications
+            }
+        case SET_NEW_NOTIFICATION: 
+            return {
+                ...state,
                 newNotifications: action.newNotifications
             }
         case SET_NONEW_NOTIFICATION: 

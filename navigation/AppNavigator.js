@@ -7,6 +7,7 @@ import Colors from '../constants/Colors';
 import LaunchScreen from '../screens/LaunchScreen';
 import AuthScreen from '../screens/AuthScreen';
 import StartupScreen from '../screens/StartupScreen';
+import RelaunchScreen from '../screens/RelaunchScreen';
 
  const navigationOptions = {
     headerStyle: {
@@ -24,7 +25,7 @@ import StartupScreen from '../screens/StartupScreen';
 
 const AdminNavigator = createStackNavigator({
     Launch: LaunchScreen,
-    Admin: AdminConsoleScreen,
+    AdminConsole: AdminConsoleScreen,
     Products: ManageProductsScreen,
     Orders: OrdersScreen
 }, {

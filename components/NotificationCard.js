@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { View, Text, StyleSheet, TouchableNativeFeedback, Image } from 'react-native';
 
 const NotificationCard = props => {
     const [readStatus, setReadStatus] = useState(props.read);
@@ -10,8 +10,9 @@ const NotificationCard = props => {
         }
         props.onPress();
     }
+
     return (
-        <TouchableOpacity delayPressIn={0} onPress={onPressHandler}>
+        <TouchableNativeFeedback background={TouchableNativeFeedback.Ripple('#ffb6c1', false)} onPress={onPressHandler}>
             <View style={readStatus ? styles.cardElevationless : styles.cardElevationMore}>
                 <View style={styles.contentContainer}>
                     <View style={{width: '80%'}}>
@@ -28,7 +29,7 @@ const NotificationCard = props => {
                     </View>
                 </View>
             </View>
-        </TouchableOpacity>
+        </TouchableNativeFeedback>
     )
 }
 

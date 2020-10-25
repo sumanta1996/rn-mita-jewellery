@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { View, FlatList, StyleSheet, ActivityIndicator } from 'react-native';
+import { View, FlatList, StyleSheet, ActivityIndicator, Text } from 'react-native';
 import Colors from '../constants/Colors';
 import { useDispatch, useSelector } from 'react-redux';
 import Order from '../components/Order';
@@ -58,6 +58,12 @@ const OrdersScreen = props => {
     if (isLoading) {
         return <View style={styles.screen}>
             <ActivityIndicator size="large" color={Colors.primary} />
+        </View>
+    }
+
+    if(orders.length === 0) {
+        return <View style={styles.screen}>
+            <Text>No orders to fetch.</Text>
         </View>
     }
 

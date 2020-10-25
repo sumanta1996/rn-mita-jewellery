@@ -1,6 +1,7 @@
 import Notification from '../../models/notification';
 
 export const FETCH_NOTIFICATIONS = 'FETCH_NOTIFICATIONS';
+export const SET_NEW_NOTIFICATION = 'SET_NEW_NOTIFICATION';
 export const SET_NONEW_NOTIFICATION = 'SET_NONEW_NOTIFICATION';
 export const SET_READ = 'SET_READ';
 const url = 'https://mita-jewellery.firebaseio.com/notifications.json';
@@ -25,6 +26,7 @@ export const setNotification = (title, body, orderId) => {
 
 export const getNotifications = () => {
     return async (dispatch) => {
+        //console.log('Fetching notifications');
         const response = await fetch(url, {
             method: 'GET',
         });
@@ -36,9 +38,18 @@ export const getNotifications = () => {
         responseData = await response.json();
         let notifications = [];
         let newNotifications = 0;
+        for(let key in responseData) {
+            if (responseData[key].newNot) {
+                newNotifications = newNotifications + 1;
+            }
+        }
+        dispatch({
+            type: SET_NEW_NOTIFICATION,
+            newNotifications: newNotifications
+        });
         for (let key in responseData) {
 
-            const responseOrderData = await fetch(`https://mita-jewellery.firebaseio.com/orders/${responseData[key].orderId}.json`, {
+            /* const responseOrderData = await fetch(`https://mita-jewellery.firebaseio.com/orders/${responseData[key].orderId}.json`, {
                 method: 'GET',
 
             });
@@ -46,17 +57,17 @@ export const getNotifications = () => {
             if (responseOrderData.ok) {
                 responseOrderData = await responseOrderData.json();
                 url = responseOrderData.images[0].urlArr.url1;
-            }
-            notifications.push(new Notification(key, responseData[key].body, responseData[key].title, responseData[key].orderId,
-                responseData[key].orderTime, responseData[key].read, responseData[key].newNot, url));
+            } */
             if (responseData[key].newNot) {
                 newNotifications = newNotifications + 1;
             }
+            notifications.push(new Notification(key, responseData[key].body, responseData[key].title, responseData[key].orderId,
+                responseData[key].orderTime, responseData[key].read, responseData[key].newNot, responseData[key].imageUrl));
+            
         }
         dispatch({
             type: FETCH_NOTIFICATIONS,
-            notifications: notifications.reverse(),
-            newNotifications: newNotifications
+            notifications: notifications.reverse()
         })
     }
 }
